@@ -483,6 +483,108 @@
             background: var(--text-muted);
         }
 
+        /* ===== VIDEO REEL ===== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+        .video-card {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-card);
+            background: var(--bg-card);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+        .video-card:hover {
+            border-color: rgba(79,143,255,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,212,255,0.1);
+        }
+        .video-card video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #000;
+        }
+        .video-card-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5,10,21,0.4);
+            opacity: 1;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .video-card:hover .video-card-overlay { opacity: 0; }
+        .video-play-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-play-icon svg { width: 20px; height: 20px; color: #fff; margin-left: 2px; }
+        .video-card-label {
+            padding: 12px 14px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .video-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10002;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+        .video-modal.active { display: flex; }
+        .video-modal video {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 0 60px rgba(0,212,255,0.15);
+        }
+        .video-modal-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .video-modal-close:hover { background: rgba(255,255,255,0.15); }
+
+        @media (max-width: 900px) {
+            .video-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .video-grid { grid-template-columns: 1fr; }
+        }
+
         /* ===== PROJECTS ===== */
         .projects-grid {
             display: grid;
@@ -716,6 +818,7 @@
             <li><a href="#about" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">About</a></li>
             <li><a href="#skills" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Skills</a></li>
             <li><a href="#experience" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Experience</a></li>
+            <li><a href="#reel" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Reel</a></li>
             <li><a href="#projects" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Projects</a></li>
             <li><a href="#contact" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Contact</a></li>
             <li><a href="resume.pdf" class="nav-resume-btn" download>Resume</a></li>
@@ -906,6 +1009,80 @@
             </div>
         </div>
     </section>
+
+    <div class="section-divider"></div>
+
+    <!-- VIDEO REEL -->
+    <section id="reel" class="section">
+        <div class="container">
+            <p class="section-label">Video Reel</p>
+            <h2 class="section-title">Visual Work</h2>
+            <p class="section-subtitle">Brand videos, AI-generated cinematics, and motion design for Web3 projects.</p>
+            <div class="video-grid">
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/build-with-superseed.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Build With Superseed — Brand Campaign</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/hype.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Hype — Promotional Video</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/chunga.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Chunga — Creative Short</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/fireworks.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Fireworks — Cinematic Celebration</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/camera-pans.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Camera Pan — AI Cinematic Shot</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/screen-shakes.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Screen Shake — Dynamic Effect</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/fullscreen-animation.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Fullscreen Animation — Motion Design</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/handdrawn-animation.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Hand-Drawn Animation — Illustrated Style</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/reference-lock.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Reference Lock — Character Consistency</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/prompt-animation.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">Prompt Animation — AI-Generated Scene</div>
+                </div>
+                <div class="video-card" onclick="openVideo(this)">
+                    <video src="videos/high-impact-animation.mp4" muted preload="metadata"></video>
+                    <div class="video-card-overlay"><div class="video-play-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
+                    <div class="video-card-label">High Impact — Kinetic Typography</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal" onclick="closeVideo(event)">
+        <button class="video-modal-close" onclick="closeVideo(event)">&times;</button>
+        <video id="modalVideo" controls></video>
+    </div>
 
     <div class="section-divider"></div>
 
@@ -1224,6 +1401,45 @@
         initParticles();
         drawParticles();
         window.addEventListener('resize', () => { sizeCanvas(); });
+
+        /* ===== VIDEO MODAL ===== */
+        function openVideo(card) {
+            const src = card.querySelector('video').src;
+            const modal = document.getElementById('videoModal');
+            const modalVid = document.getElementById('modalVideo');
+            modalVid.src = src;
+            modal.classList.add('active');
+            modalVid.play();
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVideo(e) {
+            if (e.target.id === 'videoModal' || e.target.classList.contains('video-modal-close')) {
+                const modal = document.getElementById('videoModal');
+                const modalVid = document.getElementById('modalVideo');
+                modalVid.pause();
+                modalVid.src = '';
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('videoModal');
+                if (modal.classList.contains('active')) {
+                    document.getElementById('modalVideo').pause();
+                    document.getElementById('modalVideo').src = '';
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        /* ===== VIDEO CARD HOVER PREVIEW ===== */
+        document.querySelectorAll('.video-card').forEach(card => {
+            const vid = card.querySelector('video');
+            card.addEventListener('mouseenter', () => { vid.play().catch(() => {}); });
+            card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+        });
     </script>
 </body>
 </html>
