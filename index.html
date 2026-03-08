@@ -45,6 +45,30 @@
             overflow-x: hidden;
         }
 
+        /* Animated ambient glow behind hero */
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -20%;
+            width: 140%;
+            height: 160%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(79,143,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(167,139,250,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(0,212,255,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 10%, rgba(236,72,153,0.04) 0%, transparent 40%);
+            animation: ambient-drift 15s ease-in-out infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
+        @keyframes ambient-drift {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -20px) scale(1.02); }
+            66% { transform: translate(-20px, 15px) scale(0.98); }
+            100% { transform: translate(10px, -10px) scale(1.01); }
+        }
+
         body::after {
             content: '';
             position: fixed;
@@ -108,7 +132,7 @@
             letter-spacing: 0.02em;
             transition: color 0.25s;
         }
-        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover { color: var(--accent-cyan); text-shadow: 0 0 12px rgba(0,212,255,0.3); }
         .nav-resume-btn {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             color: #fff !important;
@@ -166,6 +190,13 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 16px;
+        }
+        /* Fix: anime.js splitText chars need their own gradient since parent gradient doesn't cascade */
+        .hero-name span[data-char] {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 60%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .hero-role {
             font-family: var(--font-display);
@@ -248,9 +279,9 @@
         .social-link:hover {
             color: var(--accent-cyan);
             border-color: var(--accent-cyan);
-            background: rgba(0,212,255,0.06);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,212,255,0.15);
+            background: rgba(0,212,255,0.08);
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 6px 25px rgba(0,212,255,0.2), 0 0 12px rgba(0,212,255,0.1);
         }
         .social-link svg { width: 20px; height: 20px; }
         .hero-scroll {
@@ -305,7 +336,7 @@
         /* ===== ABOUT ===== */
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr 520px;
             gap: 60px;
             margin-top: 48px;
             align-items: start;
@@ -321,35 +352,38 @@
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 28px;
         }
         .stat-card {
             background: var(--bg-card);
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 24px 16px;
+            border-radius: 20px;
+            padding: 56px 28px;
             text-align: center;
-            transition: all 0.3s;
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
         }
         .stat-card:hover {
-            border-color: rgba(79,143,255,0.2);
-            transform: translateY(-2px);
+            border-color: rgba(79,143,255,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 40px rgba(79,143,255,0.15), 0 0 20px rgba(0,212,255,0.08);
+            background: radial-gradient(ellipse at center, rgba(79,143,255,0.06) 0%, var(--bg-card) 70%);
         }
         .stat-number {
             font-family: var(--font-display);
-            font-size: 2rem;
+            font-size: 6.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.2;
+            line-height: 1;
         }
         .stat-label {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 4px;
+            font-size: 1.45rem;
+            color: var(--text-secondary);
+            margin-top: 14px;
             line-height: 1.3;
+            font-weight: 400;
         }
 
         /* ===== SKILLS ===== */
@@ -366,6 +400,19 @@
             padding: 36px 32px;
             position: relative;
             overflow: hidden;
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
+        }
+        .skill-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(79,143,255,0.1);
+        }
+        .skill-card.marketing:hover {
+            border-color: rgba(0,212,255,0.25);
+            box-shadow: 0 8px 35px rgba(0,212,255,0.12), 0 0 15px rgba(0,212,255,0.06);
+        }
+        .skill-card.development:hover {
+            border-color: rgba(255,176,32,0.25);
+            box-shadow: 0 8px 35px rgba(255,176,32,0.12), 0 0 15px rgba(255,176,32,0.06);
         }
         .skill-card::before {
             content: '';
@@ -383,41 +430,47 @@
         }
         .skill-card-title {
             font-family: var(--font-display);
-            font-size: 1.15rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
         }
         .skill-card.marketing .skill-card-title { color: var(--accent-cyan); }
         .skill-card.development .skill-card-title { color: var(--accent-amber); }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
         .skill-tag {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 400;
-            border: 1px solid var(--border-card);
-            color: var(--text-secondary);
-            background: rgba(255,255,255,0.02);
+            padding: 14px 28px;
+            border-radius: 28px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.04);
             transition: all 0.25s;
         }
-        .skill-tag:hover { border-color: rgba(255,255,255,0.15); color: var(--text-primary); }
+        .skill-tag:hover {
+            border-color: rgba(79,143,255,0.3);
+            color: var(--text-primary);
+            background: rgba(79,143,255,0.08);
+            box-shadow: 0 0 12px rgba(79,143,255,0.1);
+            transform: translateY(-1px);
+        }
 
         /* ===== EXPERIENCE ===== */
         .timeline { margin-top: 48px; position: relative; padding-left: 40px; }
         .timeline::before {
             content: '';
             position: absolute;
-            left: 8px;
+            left: 15px;
             top: 8px;
             bottom: 8px;
-            width: 1px;
+            width: 2px;
             background: linear-gradient(to bottom, var(--accent-blue), var(--accent-cyan), transparent);
         }
         .timeline-entry { position: relative; margin-bottom: 48px; }
         .timeline-entry:last-child { margin-bottom: 0; }
         .timeline-dot {
             position: absolute;
-            left: -36px;
+            left: -32px;
             top: 6px;
             width: 17px;
             height: 17px;
@@ -438,7 +491,7 @@
         .timeline-header { margin-bottom: 12px; }
         .timeline-role {
             font-family: var(--font-display);
-            font-size: 1.15rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--text-primary);
         }
@@ -447,26 +500,26 @@
             gap: 12px;
             align-items: center;
             flex-wrap: wrap;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .timeline-company {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: var(--accent-cyan);
             font-weight: 500;
         }
         .timeline-date {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
         }
         .timeline-bullets {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         .timeline-bullets li {
             color: var(--text-secondary);
-            font-size: 0.92rem;
+            font-size: 1rem;
             font-weight: 300;
             padding-left: 18px;
             position: relative;
@@ -500,9 +553,9 @@
             cursor: pointer;
         }
         .video-card:hover {
-            border-color: rgba(79,143,255,0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,212,255,0.1);
+            border-color: rgba(0,212,255,0.35);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0,212,255,0.15), 0 0 20px rgba(0,212,255,0.08);
         }
         .video-card video {
             width: 100%;
@@ -618,8 +671,9 @@
         }
         .project-card:hover::before { opacity: 1; }
         .project-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-5px);
             background: radial-gradient(ellipse at top, rgba(79,143,255,0.06) 0%, var(--bg-card) 70%);
+            box-shadow: 0 12px 40px rgba(79,143,255,0.12), 0 0 25px rgba(0,212,255,0.06);
         }
         @keyframes shimmer-move {
             0%, 100% { background-position: 0% 50%; }
@@ -680,6 +734,28 @@
             border-radius: 50%;
             background: var(--accent-blue);
         }
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .project-link svg { width: 16px; height: 16px; fill: currentColor; }
+        .project-link:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,212,255,0.2);
+        }
 
         /* ===== TESTIMONIAL ===== */
         .testimonial-card {
@@ -691,6 +767,11 @@
             background: var(--bg-card);
             border: 1px solid var(--border-card);
             border-radius: 20px;
+            transition: all 0.35s cubic-bezier(.4,0,.2,1);
+        }
+        .testimonial-card:hover {
+            border-color: rgba(79,143,255,0.2);
+            box-shadow: 0 8px 30px rgba(79,143,255,0.08), 0 0 15px rgba(0,212,255,0.05);
         }
         .testimonial-quote-mark {
             font-family: var(--font-display);
@@ -724,21 +805,24 @@
         /* ===== CONTACT ===== */
         .contact-intro {
             text-align: center;
-            margin-bottom: 48px;
+            margin-bottom: 56px;
         }
+        .contact-intro .section-label { font-size: 0.9rem; letter-spacing: 0.25em; }
+        .contact-intro .section-title { font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 20px; }
+        .contact-intro .section-subtitle { font-size: 1.2rem; max-width: 640px; }
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 16px;
-            max-width: 800px;
-            margin: 0 auto 40px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 720px;
+            margin: 0 auto 48px;
         }
         .contact-card {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 24px 12px;
+            gap: 14px;
+            padding: 36px 20px;
             background: var(--bg-card);
             border: 1px solid var(--border-card);
             border-radius: 14px;
@@ -749,11 +833,12 @@
         .contact-card:hover {
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0,212,255,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 35px rgba(0,212,255,0.15), 0 0 20px rgba(0,212,255,0.08);
+            background: radial-gradient(ellipse at center, rgba(0,212,255,0.05) 0%, var(--bg-card) 70%);
         }
-        .contact-card svg { width: 24px; height: 24px; }
-        .contact-card-label { font-size: 0.78rem; font-weight: 500; }
+        .contact-card svg { width: 36px; height: 36px; }
+        .contact-card-label { font-size: 1.05rem; font-weight: 500; }
         .contact-resume {
             display: flex;
             justify-content: center;
@@ -773,7 +858,7 @@
             .projects-grid { grid-template-columns: 1fr; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .skills-grid { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: repeat(3, 1fr); }
+            .contact-grid { grid-template-columns: repeat(3, 1fr); max-width: 600px; }
         }
         @media (max-width: 768px) {
             nav { padding: 14px 20px; }
@@ -795,7 +880,7 @@
             .container { padding: 0 20px; }
             .section { padding: 70px 0; }
             .hero-name { font-size: clamp(2.2rem, 8vw, 3rem); }
-            .timeline { padding-left: 32px; }
+            .timeline { padding-left: 36px; }
             .contact-grid { grid-template-columns: repeat(2, 1fr); }
             .testimonial-card { padding: 32px 24px; }
         }
@@ -860,6 +945,9 @@
                 <a href="mailto:Christopheriach26@gmail.com" class="social-link" aria-label="Email">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </a>
+                <a href="https://github.com/Kitolochi" target="_blank" class="social-link" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
                 <a href="https://linktr.ee/chrisiach" target="_blank" class="social-link" aria-label="Linktree">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 </a>
@@ -881,13 +969,13 @@
                 <div class="about-text">
                     <p><strong>I sit at the intersection of crypto marketing, AI development, and video branding</strong> — a combination that lets me not just promote products, but build the tools and visual stories that bring them to life.</p>
                     <p>With hands-on experience across <strong>DeFi protocols</strong> and <strong>Layer-2 ecosystems</strong>, I've worked with teams at <strong>Superseed</strong> and <strong>Curvance</strong> — shaping narratives, managing communities, producing educational content, and coordinating marketing campaigns that drive real growth.</p>
-                    <p>But I also build. I've shipped <strong>six AI-powered applications</strong> spanning full-stack SaaS platforms, mobile apps, desktop tools, browser extensions, and professional video generation frameworks — integrating models like Claude, GPT-4 Vision, Gemini, DeepSeek, and local Ollama deployments.</p>
+                    <p>But I also build. I've shipped <strong>six projects</strong> spanning desktop productivity tools, AI agent frameworks, interactive web experiences, developer setup automation, and Claude Code extensions — integrating models like Claude, GPT-4 Vision, Gemini, DeepSeek, and local Ollama deployments.</p>
                     <p>I'm also a <strong>video brand designer</strong>, using tools like Remotion, After Effects, and AI video generation (Google Veo 3.1) to create cinematic content that elevates Web3 brands. Currently contributing to Superseed, based in Charlotte NC, and open to remote opportunities.</p>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number" data-target="6">0</div>
-                        <div class="stat-label">AI Projects Built</div>
+                        <div class="stat-label">Projects Shipped</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" data-target="2">0</div>
@@ -898,8 +986,8 @@
                         <div class="stat-label">AI Models Integrated</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number" data-target="13+">0</div>
-                        <div class="stat-label">Marketplace Scrapers</div>
+                        <div class="stat-number" data-target="6">0</div>
+                        <div class="stat-label">Public GitHub Repos</div>
                     </div>
                 </div>
             </div>
@@ -935,13 +1023,13 @@
                     <h3 class="skill-card-title">AI & Development</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">React / Next.js / Node.js</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">Claude API / GPT-4 / Gemini</span>
-                        <span class="skill-tag">DeepSeek / Ollama</span>
-                        <span class="skill-tag">PostgreSQL / Redis</span>
-                        <span class="skill-tag">SQLite / Elasticsearch</span>
-                        <span class="skill-tag">React Native / Electron</span>
-                        <span class="skill-tag">Chrome Extensions (MV3)</span>
+                        <span class="skill-tag">TypeScript / Python</span>
+                        <span class="skill-tag">Claude API / Claude Code</span>
+                        <span class="skill-tag">GPT-4 / Gemini / DeepSeek</span>
+                        <span class="skill-tag">Electron / Tailwind CSS</span>
+                        <span class="skill-tag">SQLite / Zustand</span>
+                        <span class="skill-tag">Shell / Bash Scripting</span>
+                        <span class="skill-tag">Multi-Agent Systems</span>
                         <span class="skill-tag">Remotion / Veo 3.1</span>
                         <span class="skill-tag">After Effects / Blender</span>
                         <span class="skill-tag">Prompt Engineering</span>
@@ -1095,56 +1183,10 @@
         <div class="container">
             <p class="section-label">Projects</p>
             <h2 class="section-title">What I've Built</h2>
-            <p class="section-subtitle">Six AI-powered applications — from SaaS platforms to video frameworks.</p>
+            <p class="section-subtitle">Six projects — AI tools, developer frameworks, interactive experiences, and productivity apps.</p>
             <div class="projects-grid">
 
-                <!-- Card 1 -->
-                <div class="project-card">
-                    <h3 class="project-title">Superseed Build Arena</h3>
-                    <p class="project-subtitle">Full-Stack SaaS Platform for Open-Source Contributions</p>
-                    <div class="project-tags">
-                        <span class="tag tag-tech">Next.js</span>
-                        <span class="tag tag-tech">NestJS</span>
-                        <span class="tag tag-tech">PostgreSQL</span>
-                        <span class="tag tag-tech">Prisma</span>
-                        <span class="tag tag-tech">Redis</span>
-                        <span class="tag tag-tech">TypeScript</span>
-                        <span class="tag tag-ai">Gemini</span>
-                        <span class="tag tag-ai">DeepSeek-R1</span>
-                        <span class="tag tag-ai">DeepSeek-Coder</span>
-                        <span class="tag tag-ai">GPT-5.2</span>
-                    </div>
-                    <ul class="project-bullets">
-                        <li>Competitive platform where contributors build crypto projects and AI judges PRs</li>
-                        <li>4-model ensemble AI judge with structured scoring across multiple categories</li>
-                        <li>Real-time leaderboards with ELO ranking and token reward system</li>
-                        <li>GitHub webhook integration with wallet-based authentication</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="project-card">
-                    <h3 class="project-title">Antiquing Arbitrage App</h3>
-                    <p class="project-subtitle">Enterprise Mobile Arbitrage Platform</p>
-                    <div class="project-tags">
-                        <span class="tag tag-tech">React Native</span>
-                        <span class="tag tag-tech">Node.js</span>
-                        <span class="tag tag-tech">PostgreSQL</span>
-                        <span class="tag tag-tech">Redis</span>
-                        <span class="tag tag-tech">Elasticsearch</span>
-                        <span class="tag tag-ai">Claude API</span>
-                        <span class="tag tag-ai">GPT-4 Vision</span>
-                        <span class="tag tag-ai">TensorFlow</span>
-                    </div>
-                    <ul class="project-bullets">
-                        <li>Cross-platform price comparison across 13+ marketplaces (eBay, Etsy, 1stDibs, etc.)</li>
-                        <li>AI-powered image recognition for antique authentication and valuation</li>
-                        <li>Real-time market analytics with saved searches and push notifications</li>
-                        <li>Full microservice architecture with inventory management</li>
-                    </ul>
-                </div>
-
-                <!-- Card 3 -->
+                <!-- Card 1: Mega Agenda -->
                 <div class="project-card">
                     <h3 class="project-title">Mega Agenda</h3>
                     <p class="project-subtitle">AI-Powered Desktop Productivity Hub</p>
@@ -1152,7 +1194,8 @@
                         <span class="tag tag-tech">Electron</span>
                         <span class="tag tag-tech">React</span>
                         <span class="tag tag-tech">TypeScript</span>
-                        <span class="tag tag-tech">Tailwind</span>
+                        <span class="tag tag-tech">Tailwind CSS</span>
+                        <span class="tag tag-tech">Zustand</span>
                         <span class="tag tag-tech">SQLite</span>
                         <span class="tag tag-ai">Claude Haiku</span>
                     </div>
@@ -1160,64 +1203,127 @@
                         <li>System tray productivity app with task management across 7 life categories</li>
                         <li>AI-powered RSS/news feed summarization via Claude Haiku integration</li>
                         <li>Voice control via Web Speech API with natural language command parsing</li>
-                        <li>Daily journal, keyboard shortcuts, portable desktop build</li>
+                        <li>Dark glassmorphic UI with daily journal, keyboard shortcuts, portable desktop build</li>
                     </ul>
+                    <a href="https://github.com/Kitolochi/mega-agenda" target="_blank" class="project-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View Source
+                    </a>
                 </div>
 
-                <!-- Card 4 -->
+                <!-- Card 2: Blueprint Agent -->
                 <div class="project-card">
-                    <h3 class="project-title">Job Applier</h3>
-                    <p class="project-subtitle">Privacy-First AI Application Assistant</p>
+                    <h3 class="project-title">Blueprint Agent</h3>
+                    <p class="project-subtitle">AI-Powered Project Discovery & Planning Framework</p>
                     <div class="project-tags">
-                        <span class="tag tag-tech">Chrome Extension</span>
-                        <span class="tag tag-tech">Node.js</span>
-                        <span class="tag tag-tech">SQLite</span>
-                        <span class="tag tag-ai">Ollama (llama3.2)</span>
-                        <span class="tag tag-ai">Ollama (mistral)</span>
+                        <span class="tag tag-tech">TypeScript</span>
+                        <span class="tag tag-tech">YAML</span>
+                        <span class="tag tag-tech">CLI</span>
+                        <span class="tag tag-ai">Claude API</span>
+                        <span class="tag tag-ai">Multi-Agent</span>
                     </div>
                     <ul class="project-bullets">
-                        <li>All AI processing runs locally — zero data leaves your machine</li>
-                        <li>Resume PDF parsing with intelligent form auto-fill across major job boards</li>
-                        <li>AI-generated cover letters tailored per job posting using local models</li>
-                        <li>Supports Greenhouse, Lever, LinkedIn, Indeed, web3.career</li>
+                        <li>6-phase discovery pipeline: DISCOVER, RESEARCH, DRAFT, CLARIFY, ANALYZE, HANDOFF</li>
+                        <li>Turns rough ideas into validated YAML blueprints with phases, steps, risks, and verification</li>
+                        <li>Deep web research integration with automated competitor and market analysis</li>
+                        <li>Produces structured project plans ready for spec-driven development</li>
                     </ul>
+                    <a href="https://github.com/Kitolochi/blueprint-agent" target="_blank" class="project-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View Source
+                    </a>
                 </div>
 
-                <!-- Card 5 -->
+                <!-- Card 3: MemoryPack -->
                 <div class="project-card">
-                    <h3 class="project-title">AI Video Brand Work</h3>
-                    <p class="project-subtitle">Cinematic Brand Content Using Multiple AI Video Models</p>
+                    <h3 class="project-title">MemoryPack</h3>
+                    <p class="project-subtitle">Persistent Cross-Session Memory System for Claude Code</p>
                     <div class="project-tags">
-                        <span class="tag tag-tech">Video Production</span>
-                        <span class="tag tag-tech">Prompt Engineering</span>
-                        <span class="tag tag-tech">Brand Design</span>
-                        <span class="tag tag-ai">Google Veo 3.1</span>
-                        <span class="tag tag-ai">Multiple AI Models</span>
+                        <span class="tag tag-tech">Python</span>
+                        <span class="tag tag-tech">Markdown</span>
+                        <span class="tag tag-tech">CLI</span>
+                        <span class="tag tag-ai">Claude Code</span>
+                        <span class="tag tag-ai">Memory Management</span>
                     </div>
                     <ul class="project-bullets">
-                        <li>Produced brand videos and cinematics using multiple AI video generation models</li>
-                        <li>Created brand asset-specific animations for titles, logos, and campaign graphics with Veo 3.1</li>
-                        <li>Crafted custom prompts to achieve specific visual styles and cinematic effects across models</li>
-                        <li>Delivered video content for Superseed across multiple marketing channels and formats</li>
+                        <li>Persistent memory system that accumulates learnings, decisions, and patterns across sessions</li>
+                        <li>Structured storage: learnings.md, decisions.md, patterns.md, projects.md</li>
+                        <li>Store, recall, review, and prune memory entries with semantic organization</li>
+                        <li>Integrates with Claude Code workflow for continuous improvement</li>
                     </ul>
+                    <a href="https://github.com/Kitolochi/memorypack" target="_blank" class="project-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View Source
+                    </a>
                 </div>
 
-                <!-- Card 6 -->
+                <!-- Card 4: Claude Code Setup -->
                 <div class="project-card">
-                    <h3 class="project-title">Veo3 Meta Framework</h3>
-                    <p class="project-subtitle">Professional Guide for AI Video Prompting</p>
+                    <h3 class="project-title">Claude Code Setup</h3>
+                    <p class="project-subtitle">Automated Developer Environment & Skill Configuration</p>
                     <div class="project-tags">
-                        <span class="tag tag-tech">Technical Writing</span>
-                        <span class="tag tag-tech">Framework Design</span>
-                        <span class="tag tag-ai">Google Veo 3.1</span>
-                        <span class="tag tag-ai">Claude Meta-Prompting</span>
+                        <span class="tag tag-tech">Shell</span>
+                        <span class="tag tag-tech">Bash</span>
+                        <span class="tag tag-tech">Configuration</span>
+                        <span class="tag tag-ai">Claude Code</span>
+                        <span class="tag tag-ai">Skills System</span>
                     </div>
                     <ul class="project-bullets">
-                        <li>Comprehensive 674-line professional framework for AI video generation</li>
-                        <li>Covers 5-part prompt formula, character consistency, cinematography, audio engineering</li>
-                        <li>Advanced techniques: timestamp prompting, reference images, clip extension workflows</li>
-                        <li>Published guide demonstrating deep AI prompt engineering expertise</li>
+                        <li>One-command setup for Claude Code with custom skills, agents, and memory systems</li>
+                        <li>Includes 20+ reusable skills: code-review, TDD, security-review, spec-writer, and more</li>
+                        <li>Custom agent definitions for code-reviewer, security-scanner, test-runner, project-manager</li>
+                        <li>Research agent framework with web search, scraping, and structured analysis</li>
                     </ul>
+                    <a href="https://github.com/Kitolochi/claude-code-setup" target="_blank" class="project-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View Source
+                    </a>
+                </div>
+
+                <!-- Card 5: ClaudeLog -->
+                <div class="project-card">
+                    <h3 class="project-title">ClaudeLog</h3>
+                    <p class="project-subtitle">Session Logging & Documentation for Claude Code</p>
+                    <div class="project-tags">
+                        <span class="tag tag-tech">Markdown</span>
+                        <span class="tag tag-tech">Documentation</span>
+                        <span class="tag tag-tech">Automation</span>
+                        <span class="tag tag-ai">Claude Code</span>
+                        <span class="tag tag-ai">Self-Docs</span>
+                    </div>
+                    <ul class="project-bullets">
+                        <li>Auto-documentation system for Claude Code sessions — changelogs, summaries, and snapshots</li>
+                        <li>Tracks architectural decisions, feature implementations, and debugging insights</li>
+                        <li>Session summaries with structured context for continuity across conversations</li>
+                        <li>Feeds into memory system for persistent cross-session knowledge building</li>
+                    </ul>
+                    <a href="https://github.com/Kitolochi/claudelog" target="_blank" class="project-link">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View Source
+                    </a>
+                </div>
+
+                <!-- Card 6: Interactive Showcase -->
+                <div class="project-card">
+                    <h3 class="project-title">Interactive Showcase</h3>
+                    <p class="project-subtitle">14 Interactive Web Experiences — Canvas, WebGL & GSAP</p>
+                    <div class="project-tags">
+                        <span class="tag tag-tech">Canvas API</span>
+                        <span class="tag tag-tech">WebGL</span>
+                        <span class="tag tag-tech">GSAP</span>
+                        <span class="tag tag-tech">HTML/CSS</span>
+                        <span class="tag tag-ai">AI-Augmented</span>
+                    </div>
+                    <ul class="project-bullets">
+                        <li>Curated gallery of 14 interactive web experiences with live previews</li>
+                        <li>Particle systems, generative art, fluid simulations, and motion design</li>
+                        <li>Each piece is a self-contained, responsive, single-file web experience</li>
+                        <li>Built with AI-augmented development workflows</li>
+                    </ul>
+                    <a href="https://frontend-showcase-three.vercel.app" target="_blank" class="project-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        View Live
+                    </a>
                 </div>
 
             </div>
@@ -1266,6 +1372,10 @@
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.064 2.064 0 1 1 0-4.126 2.064 2.064 0 0 1 0 4.126zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     <span class="contact-card-label">LinkedIn</span>
                 </a>
+                <a href="https://github.com/Kitolochi" target="_blank" class="contact-card">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    <span class="contact-card-label">GitHub</span>
+                </a>
                 <a href="https://linktr.ee/chrisiach" target="_blank" class="contact-card">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     <span class="contact-card-label">Linktree</span>
@@ -1288,6 +1398,7 @@
         <p>Built by Christopher Iach &middot; 2026</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/animejs@4.3.6/dist/bundles/anime.umd.min.js"></script>
     <script>
         /* ===== SCROLL PROGRESS ===== */
         const progressBar = document.querySelector('.scroll-progress');
@@ -1353,11 +1464,29 @@
         }
         setTimeout(typeRole, 600);
 
-        /* ===== PARTICLE CANVAS ===== */
+        /* ===== ENHANCED PARTICLE CANVAS ===== */
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const P_COUNT = 50;
+        const P_COUNT = 70;
+        let mouseX = -1000, mouseY = -1000;
+        let time = 0;
+
+        const COLORS = [
+            { r: 79, g: 143, b: 255 },   /* blue */
+            { r: 0, g: 212, b: 255 },     /* cyan */
+            { r: 167, g: 139, b: 250 },   /* purple */
+            { r: 255, g: 176, b: 32 },    /* amber */
+            { r: 236, g: 72, b: 153 },    /* pink */
+            { r: 52, g: 211, b: 153 },    /* emerald */
+        ];
+
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+        canvas.addEventListener('mouseleave', () => { mouseX = -1000; mouseY = -1000; });
 
         function sizeCanvas() {
             canvas.width = canvas.offsetWidth;
@@ -1368,37 +1497,80 @@
             sizeCanvas();
             particles = [];
             for (let i = 0; i < P_COUNT; i++) {
+                const c = COLORS[Math.floor(Math.random() * COLORS.length)];
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    r: Math.random() * 1.8 + 0.6
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    r: Math.random() * 2.2 + 0.8,
+                    color: c,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.01 + Math.random() * 0.02,
                 });
             }
         }
 
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            time += 0.005;
+
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                p.pulse += p.pulseSpeed;
+                const glow = 0.3 + 0.25 * Math.sin(p.pulse);
+                const sizeMulti = 1 + 0.3 * Math.sin(p.pulse);
+
+                /* Mouse attraction */
+                const mdx = mouseX - p.x, mdy = mouseY - p.y;
+                const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                if (mDist < 200 && mDist > 1) {
+                    p.vx += (mdx / mDist) * 0.03;
+                    p.vy += (mdy / mDist) * 0.03;
+                }
+
+                /* Damping */
+                p.vx *= 0.995;
+                p.vy *= 0.995;
+
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) { p.x = 0; p.vx *= -1; }
+                if (p.x > canvas.width) { p.x = canvas.width; p.vx *= -1; }
+                if (p.y < 0) { p.y = 0; p.vy *= -1; }
+                if (p.y > canvas.height) { p.y = canvas.height; p.vy *= -1; }
+
+                /* Glow dot */
+                const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * sizeMulti * 4);
+                grad.addColorStop(0, 'rgba(' + p.color.r + ',' + p.color.g + ',' + p.color.b + ',' + glow + ')');
+                grad.addColorStop(0.4, 'rgba(' + p.color.r + ',' + p.color.g + ',' + p.color.b + ',' + (glow * 0.4) + ')');
+                grad.addColorStop(1, 'rgba(' + p.color.r + ',' + p.color.g + ',' + p.color.b + ',0)');
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(79,143,255,0.45)';
+                ctx.arc(p.x, p.y, p.r * sizeMulti * 4, 0, Math.PI * 2);
+                ctx.fillStyle = grad;
                 ctx.fill();
+
+                /* Core dot */
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * sizeMulti, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + p.color.r + ',' + p.color.g + ',' + p.color.b + ',' + (glow + 0.2) + ')';
+                ctx.fill();
+
+                /* Connections — color blends between particles */
                 for (let j = i + 1; j < particles.length; j++) {
                     const q = particles[j];
                     const dx = p.x - q.x, dy = p.y - q.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 140) {
+                    if (dist < 160) {
+                        const alpha = 0.15 * (1 - dist / 160);
+                        const mr = (p.color.r + q.color.r) >> 1;
+                        const mg = (p.color.g + q.color.g) >> 1;
+                        const mb = (p.color.b + q.color.b) >> 1;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(q.x, q.y);
-                        ctx.strokeStyle = 'rgba(0,212,255,' + (0.12 * (1 - dist / 140)) + ')';
-                        ctx.lineWidth = 0.5;
+                        ctx.strokeStyle = 'rgba(' + mr + ',' + mg + ',' + mb + ',' + alpha + ')';
+                        ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }
                 }
@@ -1448,6 +1620,161 @@
             card.addEventListener('mouseenter', () => { vid.play().catch(() => {}); });
             card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
         });
+
+        /* ============================================================
+           ANIME.JS ENHANCEMENTS
+           Layered ON TOP of existing animations. If anime fails, the
+           original CSS transitions + IntersectionObserver still work.
+           ============================================================ */
+        if (typeof anime !== 'undefined') {
+            const { animate, createTimeline, stagger, onScroll, splitText } = anime;
+
+            /* --- Hero entrance timeline --- */
+            const heroEl = document.querySelector('.hero-content');
+            heroEl.style.opacity = '0';
+
+            try {
+                const nameResult = splitText('.hero-name', { chars: true });
+                const heroTL = createTimeline({ defaults: { ease: 'outExpo' } });
+
+                heroTL
+                    .add('.hero-content', {
+                        opacity: [0, 1],
+                        duration: 10,
+                    })
+                    .add(nameResult.chars, {
+                        opacity: [0, 1],
+                        y: ['100%', '0%'],
+                        rotateX: [90, 0],
+                        delay: stagger(25, { from: 'center' }),
+                        duration: 1000,
+                    }, 10)
+                    .add('.hero-role', {
+                        opacity: [0, 1],
+                        y: [30, 0],
+                        duration: 800,
+                    }, '<+=300')
+                    .add('.hero-tagline', {
+                        opacity: [0, 1],
+                        y: [20, 0],
+                        duration: 800,
+                    }, '<+=100')
+                    .add('.hero-location', {
+                        opacity: [0, 1],
+                        letterSpacing: ['0.3em', '0.08em'],
+                        duration: 800,
+                    }, '<+=80')
+                    .add('.hero-ctas .btn', {
+                        opacity: [0, 1],
+                        y: [25, 0],
+                        scale: [0.9, 1],
+                        delay: stagger(100),
+                        duration: 700,
+                    }, '<+=80')
+                    .add('.hero-socials .social-link', {
+                        opacity: [0, 1],
+                        scale: [0, 1],
+                        rotate: [-180, 0],
+                        delay: stagger(60),
+                        duration: 500,
+                    }, '<+=80')
+                    .add('.hero-scroll', {
+                        opacity: [0, 0.7],
+                        y: [-20, 0],
+                        duration: 600,
+                    }, '<+=150');
+            } catch (e) {
+                heroEl.style.opacity = '1';
+            }
+
+            /* --- Skill tags ripple in from center (transforms only) --- */
+            try {
+                document.querySelectorAll('.skill-card').forEach(card => {
+                    const tags = card.querySelectorAll('.skill-tag');
+                    animate(tags, {
+                        scale: [0.5, 1],
+                        delay: stagger(30, { from: 'center' }),
+                        duration: 500,
+                        ease: 'outBack',
+                        autoplay: onScroll({ target: card, enter: 'top 80%' }),
+                    });
+                });
+            } catch (e) {}
+
+            /* --- Timeline entries slide up (transforms only, no x to avoid line misalignment) --- */
+            try {
+                document.querySelectorAll('.timeline-entry').forEach((entry, i) => {
+                    animate(entry, {
+                        y: [30, 0],
+                        duration: 800,
+                        ease: 'outExpo',
+                        delay: i * 150,
+                        autoplay: onScroll({ target: entry, enter: 'top 85%' }),
+                    });
+                });
+            } catch (e) {}
+
+            /* --- Video cards stagger scale (transforms only) --- */
+            try {
+                animate('.video-card', {
+                    scale: [0.8, 1],
+                    y: [30, 0],
+                    delay: stagger(60),
+                    duration: 600,
+                    ease: 'outQuart',
+                    autoplay: onScroll({ enter: 'top 85%' }),
+                });
+            } catch (e) {}
+
+            /* --- Project cards stagger with rotation (transforms only) --- */
+            try {
+                animate('.project-card', {
+                    y: [60, 0],
+                    rotateY: [10, 0],
+                    scale: [0.92, 1],
+                    delay: stagger(120),
+                    duration: 900,
+                    ease: 'outExpo',
+                    autoplay: onScroll({ enter: 'top 85%' }),
+                });
+            } catch (e) {}
+
+            /* --- Stat cards pop in (transforms only) --- */
+            try {
+                animate('.stat-card', {
+                    scale: [0.4, 1],
+                    rotate: [-5, 0],
+                    delay: stagger(80, { from: 'center' }),
+                    duration: 700,
+                    ease: 'outBack',
+                    autoplay: onScroll({ enter: 'top 80%' }),
+                });
+            } catch (e) {}
+
+            /* --- Contact cards pop (transforms only) --- */
+            try {
+                animate('.contact-card', {
+                    scale: [0.6, 1],
+                    y: [25, 0],
+                    delay: stagger(60, { from: 'center' }),
+                    duration: 600,
+                    ease: 'outBack',
+                    autoplay: onScroll({ enter: 'top 85%' }),
+                });
+            } catch (e) {}
+
+            /* --- Testimonial quote mark spin in (transforms only) --- */
+            try {
+                animate('.testimonial-quote-mark', {
+                    scale: [3, 1],
+                    rotate: [-30, 0],
+                    duration: 800,
+                    ease: 'outBack',
+                    autoplay: onScroll({ enter: 'top 80%' }),
+                });
+            } catch (e) {}
+
+        } /* end anime check */
     </script>
 </body>
 </html>
