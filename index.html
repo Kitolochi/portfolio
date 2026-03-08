@@ -638,6 +638,117 @@
             .video-grid { grid-template-columns: 1fr; }
         }
 
+        /* ===== SHOWCASE ===== */
+        .showcase-preview {
+            margin-top: 48px;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .showcase-iframe-wrap {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-card);
+            background: #0a0a0f;
+            aspect-ratio: 16/10;
+        }
+        .showcase-iframe-wrap iframe {
+            width: 200%;
+            height: 200%;
+            border: none;
+            transform: scale(0.5);
+            transform-origin: top left;
+            pointer-events: none;
+            display: block;
+        }
+        .showcase-iframe-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+        .showcase-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .showcase-info h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .showcase-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .showcase-stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .showcase-stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .showcase-stat-number {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+        .showcase-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .showcase-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .showcase-tag {
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--accent-cyan);
+            background: rgba(0,212,255,0.08);
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+        .showcase-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            width: fit-content;
+        }
+        .showcase-cta:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,212,255,0.25);
+        }
+        .showcase-cta svg { width: 16px; height: 16px; }
+        @media (max-width: 900px) {
+            .showcase-preview { grid-template-columns: 1fr; }
+        }
+
         /* ===== PROJECTS ===== */
         .projects-grid {
             display: grid;
@@ -904,6 +1015,7 @@
             <li><a href="#skills" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Skills</a></li>
             <li><a href="#experience" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Experience</a></li>
             <li><a href="#reel" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Reel</a></li>
+            <li><a href="#showcase" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Showcase</a></li>
             <li><a href="#projects" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Projects</a></li>
             <li><a href="#contact" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Contact</a></li>
             <li><a href="resume.pdf" class="nav-resume-btn" download>Resume</a></li>
@@ -1027,6 +1139,7 @@
                         <span class="skill-tag">Claude API / Claude Code</span>
                         <span class="skill-tag">GPT-4 / Gemini / DeepSeek</span>
                         <span class="skill-tag">Electron / Tailwind CSS</span>
+                        <span class="skill-tag">Canvas API / WebGL / GSAP</span>
                         <span class="skill-tag">SQLite / Zustand</span>
                         <span class="skill-tag">Shell / Bash Scripting</span>
                         <span class="skill-tag">Multi-Agent Systems</span>
@@ -1175,6 +1288,52 @@
         <button class="video-modal-close" onclick="closeVideo(event)">&times;</button>
         <video id="modalVideo" controls></video>
     </div>
+
+    <div class="section-divider"></div>
+
+    <!-- INTERACTIVE SHOWCASE -->
+    <section id="showcase" class="section">
+        <div class="container">
+            <p class="section-label">Frontend</p>
+            <h2 class="section-title">Interactive Showcase</h2>
+            <p class="section-subtitle">14 interactive web experiences — particle systems, generative art, fluid simulations, and motion design.</p>
+            <div class="showcase-preview">
+                <div class="showcase-iframe-wrap">
+                    <iframe src="https://frontend-showcase-three.vercel.app" loading="lazy" sandbox="allow-scripts allow-same-origin" title="Interactive Showcase Preview"></iframe>
+                </div>
+                <div class="showcase-info">
+                    <h3>AI-Augmented Frontend Development</h3>
+                    <p>A curated gallery of self-contained, responsive web experiences built using Canvas API, WebGL, and GSAP animation systems. Each piece demonstrates the ability to rapidly prototype and ship polished frontend work — from animated landing pages to immersive visual experiences.</p>
+                    <p>These are practical skills for Web3 teams: interactive hero sections, product launch animations, brand landing pages, and engagement-driving visual experiences that set projects apart.</p>
+                    <div class="showcase-stats">
+                        <div class="showcase-stat">
+                            <span class="showcase-stat-number">14</span>
+                            <span class="showcase-stat-label">Experiences</span>
+                        </div>
+                        <div class="showcase-stat">
+                            <span class="showcase-stat-number">6</span>
+                            <span class="showcase-stat-label">Featured</span>
+                        </div>
+                        <div class="showcase-stat">
+                            <span class="showcase-stat-number">9/10</span>
+                            <span class="showcase-stat-label">Top Rating</span>
+                        </div>
+                    </div>
+                    <div class="showcase-tags">
+                        <span class="showcase-tag">Canvas API</span>
+                        <span class="showcase-tag">WebGL</span>
+                        <span class="showcase-tag">GSAP</span>
+                        <span class="showcase-tag">Responsive</span>
+                        <span class="showcase-tag">Animation</span>
+                    </div>
+                    <a href="https://frontend-showcase-three.vercel.app" target="_blank" class="showcase-cta">
+                        View Full Showcase
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="section-divider"></div>
 
