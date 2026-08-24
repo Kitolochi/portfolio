@@ -536,6 +536,96 @@
             background: var(--text-muted);
         }
 
+        /* ===== FEATURED WORK ===== */
+        #work { padding-top: 90px; scroll-margin-top: 72px; }
+        .work-lead { margin-top: 44px; }
+        .work-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .work-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-card);
+            background: #000;
+            cursor: pointer;
+            transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+        }
+        .work-card:hover {
+            border-color: rgba(0,212,255,0.45);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 50px rgba(0,212,255,0.16), 0 0 24px rgba(0,212,255,0.08);
+        }
+        .work-card video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #000;
+        }
+        .work-lead .work-card video { aspect-ratio: 21/9; }
+        .work-caption {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            padding: 44px 20px 16px;
+            background: linear-gradient(to top, rgba(5,10,21,0.92) 20%, rgba(5,10,21,0));
+            pointer-events: none;
+        }
+        .work-caption h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            letter-spacing: 0.01em;
+        }
+        .work-lead .work-caption h3 { font-size: 1.35rem; }
+        .work-caption p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 4px 0 0;
+        }
+        .work-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            font-size: 0.66rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #7ee7d6;
+            background: rgba(5,10,21,0.7);
+            border: 1px solid rgba(126,231,214,0.3);
+            border-radius: 999px;
+            padding: 5px 11px;
+            pointer-events: none;
+        }
+        .work-more {
+            margin-top: 26px;
+            text-align: center;
+        }
+        .work-more a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-card);
+            padding-bottom: 3px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+        .work-more a:hover { color: #7ee7d6; border-color: rgba(126,231,214,0.5); }
+        @media (max-width: 900px) {
+            .work-row { grid-template-columns: 1fr; }
+            .work-lead .work-card video { aspect-ratio: 16/9; }
+            .work-lead .work-caption h3 { font-size: 1.05rem; }
+            .work-card { background: var(--bg-card); }
+            .work-caption {
+                position: static;
+                padding: 12px 14px;
+                background: none;
+                border-top: 1px solid var(--border-subtle);
+            }
+        }
+
         /* ===== VIDEO REEL ===== */
         .video-grid {
             display: grid;
@@ -1011,6 +1101,7 @@
             <span></span><span></span><span></span>
         </div>
         <ul class="nav-links">
+            <li><a href="#work" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Work</a></li>
             <li><a href="#about" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">About</a></li>
             <li><a href="#skills" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Skills</a></li>
             <li><a href="#experience" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-hamburger').classList.remove('active')">Experience</a></li>
@@ -1031,8 +1122,8 @@
             <p class="hero-tagline">I grow crypto communities, build AI-powered tools, and design the visual brands that bring Web3 projects to life.</p>
             <p class="hero-location">Charlotte, NC &middot; Remote</p>
             <div class="hero-ctas">
-                <a href="#projects" class="btn btn-primary">
-                    View My Work
+                <a href="#work" class="btn btn-primary">
+                    Watch My Work
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
                 </a>
                 <a href="resume.pdf" class="btn btn-secondary" download>
@@ -1067,6 +1158,54 @@
         </div>
         <div class="hero-scroll">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FEATURED WORK -->
+    <section id="work" class="section">
+        <div class="container">
+            <p class="section-label">Featured Work</p>
+            <h2 class="section-title">Films I'm Proud Of</h2>
+            <p class="section-subtitle">Product films and brand cuts, built end to end: script, 3D, edit, sound and grade.</p>
+
+            <div class="work-lead">
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/premarket-board.mp4" poster="videos/posters/premarket-board.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-badge">Latest</div>
+                    <div class="work-caption">
+                        <h3>Premarket &mdash; Covered Calls Board</h3>
+                        <p>Product film for a trading terminal. Blender, 60fps.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="work-row">
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/premarket-rollcall.mp4" poster="videos/posters/premarket-rollcall.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Premarket &mdash; Roll Call</h3>
+                        <p>Market cards in one continuous world.</p>
+                    </div>
+                </div>
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/superseed-artifact.mp4" poster="videos/posters/superseed-artifact.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Superseed &mdash; Artifact</h3>
+                        <p>Logo reveal, glyph and rim light.</p>
+                    </div>
+                </div>
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/superseed-strategies-showcase.mp4" poster="videos/posters/superseed-strategies-showcase.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Superseed &mdash; Strategies</h3>
+                        <p>Live UI showcase for a DeFi product.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="work-more"><a href="#reel">See the full reel</a></div>
         </div>
     </section>
 
@@ -1757,6 +1896,15 @@
         window.addEventListener('resize', () => { sizeCanvas(); });
 
         /* ===== VIDEO MODAL ===== */
+        document.querySelectorAll('.work-card').forEach(card => {
+            const vid = card.querySelector('video');
+            card.addEventListener('mouseenter', () => {
+                if (!vid.dataset.loaded) { vid.preload = 'auto'; vid.load(); vid.dataset.loaded = '1'; }
+                vid.play().catch(() => {});
+            });
+            card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+        });
+
         function openVideo(card) {
             const src = card.querySelector('video').src;
             const modal = document.getElementById('videoModal');
