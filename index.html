@@ -545,6 +545,7 @@
             gap: 16px;
             margin-top: 16px;
         }
+        .work-row.pair { grid-template-columns: repeat(2, 1fr); }
         .work-card {
             position: relative;
             border-radius: 16px;
@@ -587,6 +588,9 @@
             color: var(--text-secondary);
             margin: 4px 0 0;
         }
+        .work-card.light .work-caption {
+            background: linear-gradient(to top, rgba(5,10,21,0.97) 36%, rgba(5,10,21,0));
+        }
         .work-badge {
             position: absolute;
             top: 14px;
@@ -614,7 +618,7 @@
         }
         .work-more a:hover { color: #7ee7d6; border-color: rgba(126,231,214,0.5); }
         @media (max-width: 900px) {
-            .work-row { grid-template-columns: 1fr; }
+            .work-row, .work-row.pair { grid-template-columns: 1fr; }
             .work-lead .work-card video { aspect-ratio: 16/9; }
             .work-lead .work-caption h3 { font-size: 1.05rem; }
             .work-card { background: var(--bg-card); }
@@ -1172,35 +1176,76 @@
 
             <div class="work-lead">
                 <div class="work-card" onclick="openVideo(this)">
-                    <video src="videos/premarket-board.mp4" poster="videos/posters/premarket-board.jpg" muted loop playsinline preload="none"></video>
+                    <video src="videos/featured/premarket-covered-calls.mp4" poster="videos/featured/posters/premarket-covered-calls.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-badge">Latest</div>
                     <div class="work-caption">
-                        <h3>Premarket &mdash; Covered Calls Board</h3>
-                        <p>Product film for a trading terminal. Blender, 60fps.</p>
+                        <h3>Premarket &mdash; Covered Calls on Robinhood Chain</h3>
+                        <p>Launch film for a new options product. Blender, 60fps.</p>
                     </div>
                 </div>
             </div>
 
             <div class="work-row">
                 <div class="work-card" onclick="openVideo(this)">
-                    <video src="videos/premarket-rollcall.mp4" poster="videos/posters/premarket-rollcall.jpg" muted loop playsinline preload="none"></video>
+                    <video src="videos/featured/superseed-strategies-showcase.mp4" poster="videos/featured/posters/superseed-strategies-showcase.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Superseed &mdash; Strategies</h3>
+                        <p>Full product tour of a live DeFi app.</p>
+                    </div>
+                </div>
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/featured/superseed-artifact.mp4" poster="videos/featured/posters/superseed-artifact.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Superseed &mdash; Artifact</h3>
+                        <p>One object, macro, lit like a jewel.</p>
+                    </div>
+                </div>
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/featured/premarket-board.mp4" poster="videos/featured/posters/premarket-board.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Premarket &mdash; The Market Board</h3>
+                        <p>A live market list read like a departures board.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="work-row">
+                <div class="work-card light" onclick="openVideo(this)">
+                    <video src="videos/featured/overunder.mp4" poster="videos/featured/posters/overunder.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Over Under &mdash; Brand Film</h3>
+                        <p>Bright, flat and fast. 2D, hard cuts.</p>
+                    </div>
+                </div>
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/featured/superseed-reveal.mp4" poster="videos/featured/posters/superseed-reveal.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Superseed &mdash; Logo Reveal</h3>
+                        <p>Rings gather, the mark draws itself.</p>
+                    </div>
+                </div>
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/featured/premarket-rollcall.mp4" poster="videos/featured/posters/premarket-rollcall.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
                         <h3>Premarket &mdash; Roll Call</h3>
                         <p>Market cards in one continuous world.</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="work-row pair">
                 <div class="work-card" onclick="openVideo(this)">
-                    <video src="videos/superseed-artifact.mp4" poster="videos/posters/superseed-artifact.jpg" muted loop playsinline preload="none"></video>
+                    <video src="videos/featured/superseed-yields.mp4" poster="videos/featured/posters/superseed-yields.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
-                        <h3>Superseed &mdash; Artifact</h3>
-                        <p>Logo reveal, glyph and rim light.</p>
+                        <h3>Superseed &mdash; See the Yields</h3>
+                        <p>A chart that builds itself, then names the winner.</p>
                     </div>
                 </div>
                 <div class="work-card" onclick="openVideo(this)">
-                    <video src="videos/superseed-strategies-showcase.mp4" poster="videos/posters/superseed-strategies-showcase.jpg" muted loop playsinline preload="none"></video>
+                    <video src="videos/featured/premarket-switch.mp4" poster="videos/featured/posters/premarket-switch.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
-                        <h3>Superseed &mdash; Strategies</h3>
-                        <p>Live UI showcase for a DeFi product.</p>
+                        <h3>Premarket &mdash; Your Tokens Can Earn More</h3>
+                        <p>Colour blocks and hard cuts on the beat.</p>
                     </div>
                 </div>
             </div>
