@@ -567,7 +567,11 @@
             object-fit: cover;
             background: #000;
         }
-        .work-lead .work-card video { aspect-ratio: 21/9; }
+        .work-lead .work-card video { aspect-ratio: 16/9; }
+        .work-card:focus-visible {
+            outline: 2px solid #7ee7d6;
+            outline-offset: 5px;
+        }
         .work-caption {
             position: absolute;
             left: 0; right: 0; bottom: 0;
@@ -605,6 +609,26 @@
             padding: 5px 11px;
             pointer-events: none;
         }
+        .work-favorite .work-caption {
+            position: static;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 24px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-subtle);
+        }
+        .work-watch {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            flex-shrink: 0;
+            color: #7ee7d6;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        .work-watch svg { width: 15px; height: 15px; }
         .work-more {
             margin-top: 26px;
             text-align: center;
@@ -621,6 +645,7 @@
             .work-row, .work-row.pair { grid-template-columns: 1fr; }
             .work-lead .work-card video { aspect-ratio: 16/9; }
             .work-lead .work-caption h3 { font-size: 1.05rem; }
+            .work-favorite .work-caption { align-items: flex-start; flex-direction: column; gap: 12px; padding: 16px; }
             .work-card { background: var(--bg-card); }
             .work-caption {
                 position: static;
@@ -1175,17 +1200,27 @@
             <p class="section-subtitle">Product films and brand cuts, built end to end: script, 3D, edit, sound and grade.</p>
 
             <div class="work-lead">
-                <div class="work-card" onclick="openVideo(this)">
-                    <video src="videos/featured/premarket-covered-calls.mp4" poster="videos/featured/posters/premarket-covered-calls.jpg" muted loop playsinline preload="none"></video>
-                    <div class="work-badge">Latest</div>
+                <div class="work-card work-favorite" role="button" tabindex="0" aria-label="Play Superseed — Super Strategies, my favorite film, 37 seconds" data-video-src="videos/featured/superseed-super-strategies.mp4" onclick="openVideo(this)">
+                    <video src="videos/featured/superseed-super-strategies-preview.mp4" poster="videos/featured/posters/superseed-super-strategies.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+                    <div class="work-badge">My favorite</div>
                     <div class="work-caption">
-                        <h3>Premarket &mdash; Covered Calls on Robinhood Chain</h3>
-                        <p>Launch film for a new options product. Blender, 60fps.</p>
+                        <div>
+                            <h3>Superseed &mdash; Super Strategies</h3>
+                            <p>Six protocols, one place. A product film built in Blender.</p>
+                        </div>
+                        <span class="work-watch"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Watch film &middot; 0:37</span>
                     </div>
                 </div>
             </div>
 
             <div class="work-row">
+                <div class="work-card" onclick="openVideo(this)">
+                    <video src="videos/featured/premarket-covered-calls.mp4" poster="videos/featured/posters/premarket-covered-calls.jpg" muted loop playsinline preload="none"></video>
+                    <div class="work-caption">
+                        <h3>Premarket &mdash; Covered Calls on Robinhood Chain</h3>
+                        <p>Launch film for a new options product. Blender, 60fps.</p>
+                    </div>
+                </div>
                 <div class="work-card" onclick="openVideo(this)">
                     <video src="videos/featured/superseed-strategies-showcase.mp4" poster="videos/featured/posters/superseed-strategies-showcase.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
@@ -1200,6 +1235,9 @@
                         <p>One object, macro, lit like a jewel.</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="work-row">
                 <div class="work-card" onclick="openVideo(this)">
                     <video src="videos/featured/premarket-board.mp4" poster="videos/featured/posters/premarket-board.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
@@ -1207,9 +1245,6 @@
                         <p>A live market list read like a departures board.</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="work-row">
                 <div class="work-card light" onclick="openVideo(this)">
                     <video src="videos/featured/overunder.mp4" poster="videos/featured/posters/overunder.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
@@ -1224,6 +1259,9 @@
                         <p>Rings gather, the mark draws itself.</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="work-row">
                 <div class="work-card" onclick="openVideo(this)">
                     <video src="videos/featured/premarket-rollcall.mp4" poster="videos/featured/posters/premarket-rollcall.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
@@ -1231,9 +1269,6 @@
                         <p>Market cards in one continuous world.</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="work-row pair">
                 <div class="work-card" onclick="openVideo(this)">
                     <video src="videos/featured/superseed-yields.mp4" poster="videos/featured/posters/superseed-yields.jpg" muted loop playsinline preload="none"></video>
                     <div class="work-caption">
@@ -1484,8 +1519,8 @@
 
     <!-- Video Modal -->
     <div class="video-modal" id="videoModal" onclick="closeVideo(event)">
-        <button class="video-modal-close" onclick="closeVideo(event)">&times;</button>
-        <video id="modalVideo" controls></video>
+        <button class="video-modal-close" onclick="closeVideo(event)" aria-label="Close video">&times;</button>
+        <video id="modalVideo" controls playsinline></video>
     </div>
 
     <div class="section-divider"></div>
@@ -1948,15 +1983,25 @@
                 vid.play().catch(() => {});
             });
             card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+            if (card.getAttribute('role') === 'button') {
+                card.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openVideo(card);
+                    }
+                });
+            }
         });
 
         function openVideo(card) {
-            const src = card.querySelector('video').src;
+            const preview = card.querySelector('video');
+            const src = card.dataset.videoSrc || preview.src;
+            preview.pause();
             const modal = document.getElementById('videoModal');
             const modalVid = document.getElementById('modalVideo');
             modalVid.src = src;
             modal.classList.add('active');
-            modalVid.play();
+            modalVid.play().catch(() => {});
             document.body.style.overflow = 'hidden';
         }
         function closeVideo(e) {
