@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "favorite_id": "superseed-super-strategies",
+  "films": [
+    {
+      "title": "Superseed — Super Strategies",
+      "description": "Six protocols, one place. A product film built in Blender.",
+      "style": "",
+      "video_url": "videos/featured/superseed-super-strategies.mp4",
+      "preview_url": "videos/releases/superseed-super-strategies/c0734b342ab2c34f/preview.mp4",
+      "poster_url": "videos/featured/posters/superseed-super-strategies.jpg",
+      "id": "superseed-super-strategies",
+      "release_id": "c0734b342ab2c34f",
+      "duration": 36.999674,
+      "fps": 60.0,
+      "width": 1920,
+      "height": 1080,
+      "asset_sha256": {
+        "master": "a4c84a05188135da9a6e79c0f1a915ea52052cae600c2a3d055606482336e381",
+        "preview": "ef44e464ca46bd556424150cf7fcf0eb60e3b42731947edc5b50575b900c9233",
+        "poster": "6d0f0dac810c7622d536a065f07978edd160e295e960fcd1323238cd472ac4fc"
+      }
+    },
+    {
+      "title": "Premarket — Covered Calls on Robinhood Chain",
+      "description": "Launch film for a new options product. Blender, 60fps.",
+      "style": "",
+      "video_url": "videos/featured/premarket-covered-calls.mp4",
+      "preview_url": "videos/featured/premarket-covered-calls.mp4",
+      "poster_url": "videos/featured/posters/premarket-covered-calls.jpg",
+      "id": "premarket-covered-calls"
+    },
+    {
+      "title": "Superseed — Strategies",
+      "description": "Full product tour of a live DeFi app.",
+      "style": "",
+      "video_url": "videos/featured/superseed-strategies-showcase.mp4",
+      "preview_url": "videos/featured/superseed-strategies-showcase.mp4",
+      "poster_url": "videos/featured/posters/superseed-strategies-showcase.jpg",
+      "id": "superseed-strategies-showcase"
+    },
+    {
+      "title": "Superseed — Artifact",
+      "description": "One object, macro, lit like a jewel.",
+      "style": "",
+      "video_url": "videos/featured/superseed-artifact.mp4",
+      "preview_url": "videos/featured/superseed-artifact.mp4",
+      "poster_url": "videos/featured/posters/superseed-artifact.jpg",
+      "id": "superseed-artifact"
+    },
+    {
+      "title": "Premarket — The Market Board",
+      "description": "A live market list read like a departures board.",
+      "style": "",
+      "video_url": "videos/featured/premarket-board.mp4",
+      "preview_url": "videos/featured/premarket-board.mp4",
+      "poster_url": "videos/featured/posters/premarket-board.jpg",
+      "id": "premarket-board"
+    },
+    {
+      "title": "Over Under — Brand Film",
+      "description": "Bright, flat and fast. 2D, hard cuts.",
+      "style": "light",
+      "video_url": "videos/featured/overunder.mp4",
+      "preview_url": "videos/featured/overunder.mp4",
+      "poster_url": "videos/featured/posters/overunder.jpg",
+      "id": "overunder"
+    },
+    {
+      "title": "Superseed — Logo Reveal",
+      "description": "Rings gather, the mark draws itself.",
+      "style": "",
+      "video_url": "videos/featured/superseed-reveal.mp4",
+      "preview_url": "videos/featured/superseed-reveal.mp4",
+      "poster_url": "videos/featured/posters/superseed-reveal.jpg",
+      "id": "superseed-reveal"
+    },
+    {
+      "title": "Premarket — Roll Call",
+      "description": "Market cards in one continuous world.",
+      "style": "",
+      "video_url": "videos/featured/premarket-rollcall.mp4",
+      "preview_url": "videos/featured/premarket-rollcall.mp4",
+      "poster_url": "videos/featured/posters/premarket-rollcall.jpg",
+      "id": "premarket-rollcall"
+    },
+    {
+      "title": "Superseed — See the Yields",
+      "description": "A chart that builds itself, then names the winner.",
+      "style": "",
+      "video_url": "videos/featured/superseed-yields.mp4",
+      "preview_url": "videos/featured/superseed-yields.mp4",
+      "poster_url": "videos/featured/posters/superseed-yields.jpg",
+      "id": "superseed-yields"
+    },
+    {
+      "title": "Premarket — Your Tokens Can Earn More",
+      "description": "Colour blocks and hard cuts on the beat.",
+      "style": "",
+      "video_url": "videos/featured/premarket-switch.mp4",
+      "preview_url": "videos/featured/premarket-switch.mp4",
+      "poster_url": "videos/featured/posters/premarket-switch.jpg",
+      "id": "premarket-switch"
+    }
+  ]
+}
