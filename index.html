@@ -609,7 +609,8 @@
             padding: 5px 11px;
             pointer-events: none;
         }
-        .work-favorite .work-caption {
+        .work-favorite .work-caption,
+        .work-featured .work-caption {
             position: static;
             display: flex;
             align-items: center;
@@ -629,6 +630,7 @@
             white-space: nowrap;
         }
         .work-watch svg { width: 15px; height: 15px; }
+        #hans-launch { scroll-margin-top: 96px; }
         .work-more {
             margin-top: 26px;
             text-align: center;
@@ -645,7 +647,7 @@
             .work-row, .work-row.pair { grid-template-columns: 1fr; }
             .work-lead .work-card video { aspect-ratio: 16/9; }
             .work-lead .work-caption h3 { font-size: 1.05rem; }
-            .work-favorite .work-caption { align-items: flex-start; flex-direction: column; gap: 12px; padding: 16px; }
+            .work-favorite .work-caption, .work-featured .work-caption { align-items: flex-start; flex-direction: column; gap: 12px; padding: 16px; }
             .work-card { background: var(--bg-card); }
             .work-caption {
                 position: static;
@@ -1204,6 +1206,13 @@
                     <video src="videos/releases/superseed-super-strategies/c0734b342ab2c34f/preview.mp4" poster="videos/featured/posters/superseed-super-strategies.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
                     <div class="work-badge">My favorite</div>
                     <div class="work-caption"><div><h3>Superseed — Super Strategies</h3><p>Six protocols, one place. A product film built in Blender.</p></div><span class="work-watch"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Watch film &middot; 0:37</span></div>
+                </div>
+            </div>
+
+            <div class="work-lead">
+                <div class="work-card work-featured" id="hans-launch" role="button" tabindex="0" aria-label="Play HANS Society — Launch Film" data-video-src="videos/featured/hans-launch.mp4" onclick="openVideo(this)">
+                    <video src="videos/featured/hans-launch-preview.mp4" poster="videos/featured/posters/hans-launch.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+                    <div class="work-caption"><div><h3>HANS Society — Launch Film</h3><p>A continuous 3D launch film, from scattered projects to one society.</p></div><span class="work-watch"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Watch film &middot; 0:24</span></div>
                 </div>
             </div>
 

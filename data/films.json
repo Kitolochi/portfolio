@@ -22,6 +22,25 @@
       }
     },
     {
+      "title": "HANS Society — Launch Film",
+      "description": "A continuous 3D launch film, from scattered projects to one society.",
+      "style": "",
+      "video_url": "videos/featured/hans-launch.mp4",
+      "preview_url": "videos/featured/hans-launch-preview.mp4",
+      "poster_url": "videos/featured/posters/hans-launch.jpg",
+      "id": "hans-launch",
+      "release_id": "blender-v07",
+      "duration": 24,
+      "fps": 60,
+      "width": 1920,
+      "height": 1080,
+      "asset_sha256": {
+        "master": "77127d4cb87eee3beddafe50de2f91d528db4c62eb730e869f69b4d995e67d23",
+        "preview": "43673b6131841ee88dcba7643c8ebc0c70d5105a92291a89b3d626181091b196",
+        "poster": "f33819ebf57719e088099ddde91610a32c0857bd0094f2bc322bf20f72ff41fe"
+      }
+    },
+    {
       "title": "Premarket — Covered Calls on Robinhood Chain",
       "description": "Launch film for a new options product. Blender, 60fps.",
       "style": "",
